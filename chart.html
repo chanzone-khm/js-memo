@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chart.jsの使い方</title>
+        <!-- 公式から以下リンクをコピーhttps://cdnjs.com/libraries/Chart.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"
+            integrity="sha512-tMabqarPtykgDtdtSqCL3uLVM0gS1ZkUAVhRFu1vSEFgvB73niFQWJuvviDyBGBH22Lcau4rHB5p2K2T0Xvr6Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+
+        <!-- npmでインストールした場合は以下 -->
+        <!-- <script src="./node_modules/chart.js/dist/Chart.js"></script> -->
+        
+        <!-- 時系列データを使う場合は必須 date-fnsというchartjsのアダプター -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js">
+        </script>
+</head>
+
+<body>
+    <div style="width:400px">
+        <!-- グラフを描画したい箇所にcanvasタグを作る -->
+        <canvas id="myChart" width="400px" height="400px">
+            <!-- ブラウザがcanvasサポートしていないときに出てくる -->
+            canvas not supported
+        </canvas>
+        <script src="js/chart.js"></script>        
+    </div>
+    
+</body>
+
+</html>
+
+
+
+
