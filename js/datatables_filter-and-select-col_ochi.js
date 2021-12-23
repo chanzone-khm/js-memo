@@ -7,6 +7,7 @@
 
 // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/ フィルターの設定を付与してdatatablesを作る_/_/_/_/_/_/
 // https://datatables.net/extensions/fixedheader/examples/options/columnFiltering.html
+
 $(document).ready(function () {
 	// Setup - add a text input to each footer cell
 	$("#foo-table thead tr")
@@ -30,8 +31,9 @@ $(document).ready(function () {
 		// 縦スクロールバーを有効にする (scrollYは200, "200px"など「最大の高さ」を指定します)
 		scrollY: 500,
 
-		orderCellsTop: false,
+		orderCellsTop: true,
 		fixedHeader: true,
+
 		initComplete: function () {
 			var api = this.api();
 
@@ -48,7 +50,7 @@ $(document).ready(function () {
 					$(cell).html('<input type="text" placeholder="' + title + '" />');
 
 					// On every keypress in this input
-					$(
+					filter_val = $(
 						"input",
 						$(".filters th").eq($(api.column(colIdx).header()).index())
 					)
@@ -76,10 +78,60 @@ $(document).ready(function () {
 							$(this)
 								.focus()[0]
 								.setSelectionRange(cursorPosition, cursorPosition);
+							console.log("this.value" + this.value);
+							return this.value;
 						});
 				});
 		},
 	});
-	
+
+	$.fn.dataTableExt.oApi.fnGetHiddenTrNodes = function (oSettings, arg1, arg2) {
+		/* Note the use of a DataTables 'private' function thought the 'oApi' object */
+
+		var anNodes = this.oApi._fnGetTrNodes(oSettings);
+		var anDisplay = $("tbody tr", oSettings.nTable);
+
+		/* Remove nodes which are being displayed */
+		for (var i = 0; i < anDisplay.length; i++) {
+			var iIndex = jQuery.inArray(anDisplay[i], anNodes);
+
+			if (iIndex != -1) {
+				anNodes.splice(iIndex, 1);
+			}
+		}
+
+		/* Fire back the array to the caller */
+		return anNodes;
+	};
+
+	var rows = table.fnGetNodes(); // get all nodes
+	var rows_hidden = table.fnGetHiddenTrNodes(); // get all hidden nodes
+
+	var result = [],
+		found;
+
+	// remove hidden nodes from all nodes
+	for (var i = 0; i < rows.length; i++) {
+		found = false;
+		for (var j = 0; j < rows_hidden.length; j++) {
+			if (rows[i] == rows_hidden[j]) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			result.Push(rows[i]);
+		}
+	}
+	// select 拡張機能を列設定で有効にする。
+
+	table.select.style("os");
+	table.select.items("column");
+	table.on("select", function (e, dt, type, indexes) {
+		if (type === "column") {
+			var data = table.columns(indexes).data();
+			// console.log(data[0]);
+		}
+	});
 });
 // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_//_//_//_//_//_//_/
