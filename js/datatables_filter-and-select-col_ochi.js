@@ -1,4 +1,4 @@
-// FIlter機能を実装
+﻿// FIlter機能を実装
 
 // ↓これいらない？？
 // jQuery(function ($) {
