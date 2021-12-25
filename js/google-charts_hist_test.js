@@ -24,6 +24,7 @@ var data = [
 
 // 配列の要素 1番目に追加する。(dataの配列が1個ずつうしろにずれる)
 data.unshift(col)
+console.log(data)
 e.addEventListener(
 	"click",
 	function () {
