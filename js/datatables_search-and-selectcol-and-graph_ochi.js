@@ -1,4 +1,4 @@
-// 参考 にあるhttps://www.webdevqa.jp.net/ja/jquery/jquery-datatables%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC%E3%81%95%E3%82%8C%E3%81%9F%E5%88%97%E3%81%AE%E5%80%A4%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B/1050353198/
+﻿// 参考 にあるhttps://www.webdevqa.jp.net/ja/jquery/jquery-datatables%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC%E3%81%95%E3%82%8C%E3%81%9F%E5%88%97%E3%81%AE%E5%80%A4%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B/1050353198/
 //  これをベースに改造みた https://jsfiddle.net/q0e1bdcz/1/
 // 公式の参考サイトhttps://datatables.net/reference/type/selector-modifier
 
