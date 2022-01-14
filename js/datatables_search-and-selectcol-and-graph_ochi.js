@@ -81,7 +81,7 @@ $(".btn").on("click", function () {
 	// _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
 	// _/_/_/_/_/_/_/_/取得したデータをグラフライブラリで読める形に処理する_/_/_/_/_/_/_/_/
 	// ★★★★google chart★★★
-	
+
 	// 取得したデータが文字列の配列になっているので文字列を数値に変換
 	graphData1D = graphData1D.map(Number);
 	console.log(graphData1D);
@@ -137,7 +137,7 @@ $(".btn").on("click", function () {
 	google.charts.load("current", { packages: ["corechart"] });
 	google.charts.setOnLoadCallback(drawChart);
 	// ★★★★google chart終わり★★★
-	
+
 
 
 
