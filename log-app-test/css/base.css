@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+/* common */
+html{
+  font-size: 100%;
+}
+
+body{
+  font-family: "Hiragino Kaku Gothiv ProN", "メイリオ", sans-serif;
+  color: #555;
+  line-height: 1.5;
+
+}
+
+img{
+  width: 100%;
+}
+
+.wrapper{
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+/* header  */
+/* header{
+  border-top: 8px solid #555;
+} */
+
+.header_logo{
+  width: 90px;
+}
+
+.header_content{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px auto;
+}
+
+header nav ul{
+  display: flex;
+}
+
+header nav ul li{
+margin-left: 40px;
+list-style: none;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: #555;
+}
+
+header nav ul li a:hover,
+header nav ul li a:active,
+header nav ul li.current a {
+  color: #000;
+}
+
+/* main */
+.base {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  border: 1px #767776 solid;
+}
+.class1 {
+  width: 70%;
+  border: 1px #767776 solid;
+}
+
+.class2 {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  border: 1px #767776 solid;
+}
+.over {
+  border: 1px #767776 solid;
+}
+
+.under{
+  border: 1px #767776 solid;
+}
+
