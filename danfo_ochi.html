@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.0.2/lib/bundle.min.js"></script>
+</head>
+
+<body>
+    <script>
+
+        // dates = new dfd.dateRange({ start: '2017-01-01', end: "2020-01-01", period: 4, freq: "Y" })
+        dates = ["2017-03-1", "2018/12-01", "2019-3-01", "2020/12/01"] // formatが違くてもなんとかなるぽい。
+        console.log(dates);
+
+        obj_data = {
+            'A': dates,
+            'B': ["bval1", "bval2", "bval3", "bval4"],
+            'C': [10, 20, 30, 40],
+            'D': [1.2, 3.45, 60.1, 45],
+            'E': ["test", "train", "test", "train"]
+        }
+
+        // 基本的な使い方
+        df = new dfd.DataFrame(obj_data)
+        console.log("基本的な使い方")
+        df.print()
+
+        // 列名をしてして表示
+        console.log("A列を指定")
+
+        df["A"].print()
+
+        // オブジェクトなので変数に格納しても使える
+        var colA = df["A"]
+        console.log("オブジェクトとして使う")
+        colA.print()
+
+        // 特定の列のデータをarrayとして取り出にはvaluesをつかう。
+        console.log("Series.valuesで値をとってくる")
+        console.log("isArray??" + Array.isArray(colA.values))
+        console.log(colA.values)
+
+        // 列を追加する。 ここでは、C列をコピーしてF列に値を列追加
+        console.log("列を追加する。")
+
+        var new_col = df["C"]
+        df.addColumn("F", new_col, { inplace: true })
+        df.print()
+        console.log(df['F'].values)
+
+        // toDateTimeをするとdateObjectArray??に変換される 変換後のmethodを呼び出すことでSeriesとなる。
+        datetime = dfd.toDateTime(df["A"])
+        // console.log(datetime)
+        // console.log(datetime.values) // datetimeはSeriesではないのでvaluesメソッドは無くエラーになる。
+
+        // YYYY列とM列を作る (MM列だとmonth()メソッドが上手く動かない。)
+        console.log("YYYY列とMM列を追加する")
+        year = datetime.year().values
+        month = datetime.month().values
+
+        // 何故かmonth()は1月が0 12月が11 と -1された値なので、+1してあげる。
+        for (let i = 0; i < month.length; i++) {
+            month[i] = month[i] + 1
+        }
+
+        df.addColumn("year", year, { inplace: true })
+        df.addColumn("month", month, { inplace: true })
+        df.print()
+
+
+        // YYYYMMフォーマットを使ってgroupbyをする。
+        console.log("MMでgroupbyする")
+        let grp = df.groupby(["month"])
+        grp.col(["D"]).mean().print()
+        // groupby したデータをarrayで返す
+        console.log("groupby したデータをarrayで返す")
+
+        D_mean = grp.col(["D"]).mean()["D_mean"].values // 新しい列名 = 元の列名_演算 となる。 D_mean
+        D_std = grp.col(["D"]).std()["D_std"].values // 新しい列名 = 元の列名_演算 となる。 D_mean
+        console.log(D_mean)
+        // 桁数丸め込み関数
+        function roundDecimal(value, n) {
+            return Math.round(value * Math.pow(10, n)) / Math.pow(10, n);
+        }
+
+
+        for (let i = 0; i < D_mean.length; i++) {
+            D_mean[i] = roundDecimal(D_mean[i], 3)
+            D_std[i] = roundDecimal(D_std[i], 3)
+            console.log(grp.col(["D"]).mean()["month"].values[i] + "月の平均は" + D_mean[i])
+            console.log(grp.col(["D"]).std()["month"].values[i] + "月の標準偏差は" + D_std[i])
+
+        }
+
+
+        // 以下は参考
+        console.log("★★★★★★★★★★★★★★★★★★★★★★★")
+        console.log("★                                      ★")
+        console.log("★                                      ★")
+        console.log("★         以下はメモ書き。              ★")
+        console.log("★         調べたけど使わなそう。         ★")
+        console.log("★         だけどつかうかもしれんので     ★")
+        console.log("★         残しておく                    ★")
+        console.log("★                                      ★")
+        console.log("★                                      ★")
+        console.log("★                                      ★")
+        console.log("★★★★★★★★★★★★★★★★★★★★★★★")
+
+        console.log("YYYYMMフォーマット作って列に追加する方法。でもこれだと使い勝手悪いことがわかったので、メモとして残すのみ")
+        // A列の日付データからYYYY列とMM列を作る。
+        datetime = dfd.toDateTime(df["A"])
+        yearmonth = []
+        for (let i = 0; i < datetime.year().values.length; i++) {
+            // 月フォーマットがMMとなるように1桁づきは0を追記する。
+            if (datetime.month().values[i] < 10) {
+                yearmonth[i] = String(datetime.year().values[i]) + "0" + String(datetime.month().values[i])
+            } else {
+                yearmonth[i] = String(datetime.year().values[i]) + String(datetime.month().values[i])
+            }
+
+        }
+        console.log("日付列からYYYYMMフォーマットのarrayを作る")
+
+        console.log(yearmonth)
+
+        // YYYYMMフォーマットの列を追加
+        console.log("YYYYMMフォーマットの列をdfに追加する。")
+
+        df.addColumn("yearmonth", yearmonth, { inplace: true })
+        df.print()
+
+    </script>
+
+
+</body>
+
+</html>
