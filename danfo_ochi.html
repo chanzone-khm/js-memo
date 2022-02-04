@@ -13,7 +13,7 @@
     <script>
 
         // dates = new dfd.dateRange({ start: '2017-01-01', end: "2020-01-01", period: 4, freq: "Y" })
-        dates = ["2017-03-1", "2018/12-01", "2019-3-01", "2020/12/01"] // formatが違くてもなんとかなるぽい。
+        dates = ["2020-03-1", "2018/12-01", "2019-3-01", "2017/12/01"] // formatが違くてもなんとかなるぽい。
         console.log(dates);
 
         obj_data = {
@@ -96,7 +96,25 @@
 
         }
 
+        // loc
+        // locの使い方
+        
+        console.log(df["E"].eq("train"))
+        df["E"].eq("train").print()
+        console.log("locの使い方 E列がtrainのデータだけ抽出")
+        let sub_df = df.loc({rows: df["E"].eq("train").values })
+        // let sub_df = df.loc({ columns: ["Count", "Price"] })
 
+        sub_df.print()
+        
+
+
+        console.log("日付順にソート")
+        df.sortValues("A", { inplace: true})
+        df.print()
+
+
+        
         // 以下は参考
         console.log("★★★★★★★★★★★★★★★★★★★★★★★")
         console.log("★                                      ★")
